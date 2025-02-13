@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Card Pack Opener</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1 class="title">Pokémon Card Pack Opener</h1>
+    <br>
+
+    <div class="pack-container" onmousedown="cutPack(event)">
+        <div class="pack" id="pack"></div>
+        <div class="cards-container" id="cardsContainer"></div>
+    </div>
+
+    <button class="binder-btn" onclick="window.location.href='binder.html'">Go to Binder</button>
+
+
+
+    <script>
+
+
+        const commonCards = [
+            { id: 63, image: "/Common/abra-base-set-bs-43-325x447.jpg" },
+            { id: 1, image: "/Common/bulbasaur-base-set-bs-44-325x447.jpg" },
+            { id: 10, image: "/Common/caterpie-base-set-bs-45-325x447.jpg" },
+            { id: 4, image: "/Common/charmander-base-set-bs-46.jpg" },
+            { id: 50, image: "/Common/diglett-base-set-bs-47-325x447.jpg" },
+            { id: 84, image: "/Common/doduo-base-set-bs-48.jpg" },
+            { id: 96, image: "/Common/drowzee-base-set-bs-49-325x447.jpg" },
+            { id: 92, image: "/Common/gastly-base-set-bs-50-325x447.jpg" },
+            { id: 109, image: "/Common/koffing-base-set-bs-51-325x447.jpg" },
+            { id: 66, image: "/Common/machop-base-set-bs-52.jpg" },
+            { id: 11, image: "/Common/magnemite-base-set-bs-53-325x447.jpg" },
+            { id: 11, image: "/Common/metapod-base-set-bs-54.jpg" },
+            { id: 32, image: "/Common/nidoran-male-base-set-bs-55-325x447.jpg" },
+            { id: 95, image: "/Common/onix-base-set-bs-56.jpg" },
+            { id: 16, image: "/Common/pidgey-base-set-bs-57.jpg" },
+            { id: 25, image: "/Common/pikachu-base-set-bs-58-325x447.jpg" },
+            { id: 61, image: "/Common/poliwag-base-set-bs-59-325x447.jpg" },
+            { id: 77, image: "/Common/ponyta-base-set-bs-60-325x447.jpg" },
+            { id: 19, image: "/Common/rattata-base-set-bs-61-325x447.jpg" },
+            { id: 27, image: "/Common/sandshrew-base-set-bs-62-325x447.jpg" },
+            { id: 7, image: "/Common/squirtle-base-set-bs-63-325x447.jpg" },
+            { id: 121, image: "/Common/starmie-base-set-bs-64.jpg" },
+            { id: 120, image: "/Common/staryu-base-set-bs-65-325x447.jpg" },
+            { id: 24, image: "/Common/tangela-base-set-bs-66.jpg" },
+            { id: 100, image: "/Common/voltorb-base-set-bs-67.jpg" },
+            { id: 37, image: "/Common/vulpix-base-set-bs-68-325x447.jpg" },
+            { id: 13, image: "/Common/weedle-base-set-bs-69-325x447.jpg" },
+        ];
+
+        const uncommonCards = [
+            { id: 59, image: "/uncommon/arcanine-base-set-bs-23.jpg" },
+            { id: 5, image: "/uncommon/charmeleon-base-set-bs-24-325x447.jpg" },
+            { id: 87, image: "/uncommon/dewgong-base-set-bs-25.jpg" },
+            { id: 147, image: "/uncommon/dratini-base-set-bs-26-325x447.jpg" },
+            { id: 83, image: "/uncommon/farfetchd-base-set-bs-27.jpg" },
+            { id: 58, image: "/uncommon/growlithe-base-set-bs-28-325x447.jpg" },
+            { id: 93, image: "/uncommon/haunter-base-set-bs-29-325x447.jpg" },
+            { id: 2, image: "/uncommon/ivysaur-base-set-bs-30.jpg" },
+            { id: 124, image: "/uncommon/jynx-base-set-bs-31.jpg" },
+            { id: 64, image: "/uncommon/kadabra-base-set-bs-32-325x447.jpg" },
+            { id: 14, image: "/uncommon/kakuna-base-set-bs-33.jpg" },
+            { id: 67, image: "/uncommon/machoke-base-set-bs-34-325x447.jpg" },
+            { id: 129, image: "/uncommon/magikarp-base-set-bs-35-325x447.jpg" },
+            { id: 126, image: "/uncommon/magmar-base-set-bs-36-325x447.jpg" },
+            { id: 33, image: "/uncommon/nidorino-base-set-bs-37-325x447.jpg" },
+            { id: 61, image: "/uncommon/poliwhirl-base-set-bs-38.jpg" },
+            { id: 137, image: "/uncommon/porygon-base-set-bs-39-325x447.jpg" },
+            { id: 20, image: "/uncommon/raticate-base-set-bs-40-325x447.jpg" },
+            { id: 86, image: "/uncommon/seel-base-set-bs-41-325x447.jpg" },
+            { id: 8, image: "/uncommon/wartortle-base-set-bs-42.jpg" },
+        ];
+
+        const rareCards = [
+            { id: 15, image: "/Rares/beedrill-base-set-bs-17.jpg" },
+            { id: 148, image: "/Rares/dragonair-base-set-bs-18-325x447.jpg" },
+            { id: 51, image: "/Rares/dugtrio-base-set-bs-19-325x447.jpg" },
+            { id: 125, image: "/Rares/electabuzz-base-set-bs-20.jpg" },
+            { id: 101, image: "/Rares/electrode-base-set-bs-21-325x447.jpg" },
+            { id: 17, image: "/Rares/pidgeotto-base-set-bs-22.jpg" },
+            { id: 113, image: "/Hallows/chansey-base-set-bs-3.jpg" },
+            { id: 6, image: "/Hallows/charizard-base-set-bs-4-325x447.jpg" },
+            { id: 35, image: "/Hallows/clefairy-base-set-bs-5.jpg" },
+            { id: 130, image: "/Hallows/gyarados-base-set-bs-6-325x447.jpg" },
+            { id: 107, image: "/Hallows/hitmonchan-base-set-bs-7.jpg" },
+            { id: 68, image: "/Hallows/machamp-base-set-bs-8-325x447.jpg" },
+            { id: 150, image: "/Hallows/mewtwo-base-set-bs-10-325x447.jpg" },
+            { id: 34, image: "/Hallows/nidoking-base-set-bs-11-325x447.jpg" },
+            { id: 38, image: "/Hallows/ninetales-base-set-bs-12.jpg" },
+            { id: 62, image: "/Hallows/poliwrath-base-set-bs-13.jpg" },
+            { id: 26, image: "/Hallows/raichu-base-set-bs-14-325x447.jpg" },
+            { id: 3, image: "/Hallows/venusaur-base-set-bs-15.jpg" },
+            { id: 145, image: "/Hallows/zapdos-base-set-bs-16-325x447.jpg" },
+            {id: 9, image: "/Hallows/blastoise-base-set-bs-2-325x447.jpg"}
+        ];
+
+        const energyCards = [
+            { id: 170, image: "/energy/fighting-energy-base-set-bs-97-225x309.jpg" },
+            { id: 171, image: "/energy/fire-energy-base-set-bs-98.jpg" },
+            { id: 172, image: "/energy/grass-energy-base-set-bs-99.jpg" },
+            { id: 173, image: "/energy/lightning-energy-base-set-bs-100-325x447.jpg" },
+            { id: 174, image: "/energy/psychic-energy-base-set-bs-101-225x309.jpg" },
+            { id: 175, image: "/energy/water-energy-base-set-bs-102.jpg" },
+        ];
+
+        const trainerCards = [
+            { id: 151, image: "/trainers/bill-base-set-bs-91-325x447.jpg" },
+            { id: 152, image: "/trainers/clefairy-doll-base-set-bs-70-325x447.jpg" },
+            { id: 153, image: "/trainers/computer-search-base-set-bs-71-325x447.jpg" },
+            { id: 154, image: "/trainers/defender-base-set-bs-80-325x447.jpg" },
+            { id: 155, image: "/trainers/devolution-spray-base-set-bs-72.jpg" },
+            { id: 156, image: "/trainers/energy-removal-base-set-bs-92-325x447.jpg" },
+            { id: 157, image: "/trainers/energy-retrieval-base-set-bs-81-325x447.jpg" },
+            { id: 158, image: "/trainers/full-heal-base-set-bs-82-325x447.jpg" },
+            { id: 159, image: "/trainers/gust-of-wind-base-set-bs-93-325x447.jpg" },
+            { id: 160, image: "/trainers/impostor-professor-oak-base-set-bs-73-325x447.jpg" },
+            { id: 161, image: "/trainers/item-finder-base-set-bs-74-325x447.jpg" },
+            { id: 162, image: "/trainers/lass-base-set-bs-75.jpg" },
+            { id: 163, image: "/trainers/maintenance-base-set-bs-83.jpg" },
+            { id: 164, image: "/trainers/pluspower-base-set-bs-84.jpg" },
+            { id: 165, image: "/trainers/pokedex-base-set-bs-87-325x447.jpg" },
+            { id: 166, image: "/trainers/pokemon-breeder-base-set-bs-76.jpg" },
+            { id: 167, image: "/trainers/pokemon-center-base-set-bs-85.jpg" },
+
+        ];
+
+
+        let packCards = [];
+        let currentIndex = 0;
+
+        function cutPack(event) {
+            const pack = document.getElementById("pack");
+            if (!pack) return;
+
+            pack.style.transform = "translateY(-150%)";
+            pack.style.opacity = "0";
+            setTimeout(() => {
+                pack.remove();
+                document.getElementById("cardsContainer").style.visibility = "visible";
+                openPack();
+            }, 500);
+        }
+
+// Function to open the pack and display the cards with sequential animation
+function openPack() {
+    const cardsContainer = document.getElementById("cardsContainer");
+    cardsContainer.innerHTML = "";
+    packCards = [];
+    currentIndex = 0;
+
+    function getRandomCard(pool, alreadyPicked) {
+        let randomIndex;
+        let selectedCard;
+        do {
+            randomIndex = Math.floor(Math.random() * pool.length);
+            selectedCard = pool[randomIndex];
+        } while (alreadyPicked.includes(selectedCard.id)); // Ensure no duplicates by checking the ID
+
+        alreadyPicked.push(selectedCard.id); // Add the card ID to the alreadyPicked list
+        pool.splice(randomIndex, 1); // Remove the selected card from the pool
+        return selectedCard;
+    }
+
+    // Track already selected card IDs to avoid duplicates in the same pack
+    let alreadyPicked = [];
+
+    // Select 4 common cards
+    for (let i = 0; i < 4; i++) {
+        packCards.push(getRandomCard([...commonCards], alreadyPicked)); // Using a copy to avoid modifying the original array
+    }
+
+    // Select 3 uncommon cards
+    for (let i = 0; i < 3; i++) {
+        packCards.push(getRandomCard([...uncommonCards], alreadyPicked));
+    }
+
+    // Select 1 trainer card
+    packCards.push(getRandomCard([...trainerCards], alreadyPicked));
+
+    // Select 1 energy card
+    packCards.push(getRandomCard([...energyCards], alreadyPicked));
+
+    // Select 1 rare card (the last card in the pack)
+    packCards.push(getRandomCard([...rareCards], alreadyPicked));
+
+    // Create the card elements and append them to the container
+    for (let i = packCards.length - 1; i >= 0; i--) {
+        let cardElement = document.createElement("div");
+        cardElement.classList.add("card");
+        // cardElement.style.transform = `translateY(-${i * 5}px)`;
+        cardElement.style.zIndex = packCards.length - i;
+
+        let cardImage = document.createElement("img");
+        cardImage.src = `images/${packCards[i].image}`;
+        cardElement.appendChild(cardImage);
+
+        cardElement.onclick = (event) => {
+            revealNextCard(event, i === packCards.length - 1);
+            addToBinder(packCards[i].image, packCards[i].id); // Add card with ID to binder
+        };
+
+        cardsContainer.appendChild(cardElement);
+    }
+    }
+
+// Function to reveal the next card and prevent duplicates in the binder
+function revealNextCard(event, isRare) {
+    let card = event.currentTarget;
+    if (currentIndex < packCards.length) {
+        card.style.transform = "translateY(-250px)";
+        card.style.opacity = "0";
+        setTimeout(() => {
+            card.remove();
+            if (currentIndex === packCards.length - 1) {
+                // If it's the last card (rare card), execute specific actions
+                console.log('Last card revealed: Rare');
+            }
+        }, 1000);
+        currentIndex++;
+    }
+}
+
+        // Function to add card to binder and prevent duplicates
+        function addToBinder(image, id) {
+            let binder = JSON.parse(localStorage.getItem('binderCards')) || [];
+
+            // Prevent adding duplicate cards based on both ID and Image path
+            if (!binder.some(item => item.id === id)) {
+                binder.push({ id, image });
+                localStorage.setItem('binderCards', JSON.stringify(binder));
+            }
+        }
+        
+// Array of possible background images
+const packBackgrounds = [
+    "images/Packs/blastoisePack.jpg",
+    "images/Packs/venusaurPack.png",
+    "images/Packs/charazardPack.png"
+];
+
+// Select a random background image
+const randomBackground = packBackgrounds[Math.floor(Math.random() * packBackgrounds.length)];
+
+// Set the background image of the pack
+document.getElementById("pack").style.backgroundImage = `url(${randomBackground})`;
+
+
+
+
+    </script>
+</body>
+
+</html>
