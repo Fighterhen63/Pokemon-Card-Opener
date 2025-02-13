@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Packs</title>
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f7fb;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Moving Text Banner */
+        .top-banner {
+            background-color: #ff6347; /* Tomato red */
+            color: white;
+            padding: 25px 0;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .top-banner span {
+            position: absolute;
+            white-space: nowrap;
+            animation: scrollBanner 15s linear infinite;
+        }
+
+        /* Keyframes for the Scrolling Animation */
+        @keyframes scrollBanner {
+            0% {
+                left: 100%;
+            }
+            100% {
+                left: -100%;
+            }
+        }
+
+        /* Heading Styles */
+        h1 {
+            font-size: 3rem;
+            color: #3f4a56;
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        /* Container Styles for Grid Layout */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Image Styles */
+        .pokemon-pack {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pokemon-pack:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Link Styles */
+        a {
+            display: block;
+            text-decoration: none;
+        }
+
+        /* Hover Effect for Images */
+        .pokemon-pack:hover {
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+        /* Responsive Text Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .top-banner {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Footer Style */
+        footer {
+            margin-top: 60px;
+            font-size: 0.9rem;
+            color: #aaa;
+            padding: 20px;
+            background-color: #3f4a56;
+            color: white;
+        }
+
+        footer a {
+            color: #ff6347;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Moving Banner -->
+    <!-- <div class="top-banner">
+        <span>🎉 Limited Edition Pokémon Packs - Get Yours Now! 🎉</span>
+    </div> -->
+
+    <h1>What Set Will You Capture Today?</h1>
+
+    <div class="container">
+        <a href="/Base Set App/index.html">
+            <img src="Global_Packs/blastoisePack.jpg" alt="Pokémon Pack 1" class="pokemon-pack">
+        </a>
+        <a href="/Pokemon XY Base Set/index.html">
+            <img src="Global_Packs/blastoisePackXY.jpg" alt="Pokémon Pack 2" class="pokemon-pack">
+        </a>
+        <a href="pack3.html">
+            <img src="pokemon-pack3.jpg" alt="Coming Soon!" class="pokemon-pack">
+        </a>
+        <a href="">
+            <img src="pokemon-pack4.jpg" alt="Coming Soon!" class="pokemon-pack">
+        </a>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Pokémon Packs. All rights reserved.</p>
+        <p>Visit Pokemon's <a href="https://www.pokemon.com" target="_blank">official website.</a></p>
+    </footer>
+
+</body>
+</html>
