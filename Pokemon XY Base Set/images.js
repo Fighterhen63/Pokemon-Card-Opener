@@ -1,0 +1,26 @@
+const cardPool = [
+    "Base_Set/abra-base-set-bs-43-325x447.jpg",
+    "Base_Set/alakazam-base-set-bs-1.jpg",
+    "Base_Set/arcanine-base-set-bs-23.jpg",
+    "Base_Set/beedrill-base-set-bs-17-325x447.jpg",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+    // "Base_Set/",
+
+
+];

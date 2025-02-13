@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Card Pack Opener</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1 class="title">XY Pokémon Card Pack Opener</h1>
+    <br>
+
+    <div class="pack-container" onmousedown="cutPack(event)">
+        <div class="pack" id="pack"></div>
+        <div class="cards-container" id="cardsContainer"></div>
+    </div>
+
+    <button class="binder-btn" onclick="window.location.href='binder.html'">Go to Binder</button>
+
+
+
+    <script>
+
+
+        const commonCards = [
+            { id: 1, image: "/Common/en_US-XY1-003-weedle.jpg" },
+            { id: 2, image: "/Common/en_US-XY1-006-ledyba.jpg" },
+            { id: 3, image: "/Common/en_US-XY1-010-pansage.jpg" },
+            { id: 4, image: "/Common/en_US-XY1-012-chespin.jpg" },
+            { id: 5, image: "/Common/en_US-XY1-015-scatterbug.jpg" },
+            { id: 6, image: "/Common/en_US-XY1-018-skiddo.jpg" },
+            { id: 7, image: "/Common/en_US-XY1-020-slugma.jpg" },
+            { id: 8, image: "/Common/en_US-XY1-022-pansear.jpg" },
+            { id: 9, image: "/Common/en_US-XY1-024-fennekin.jpg" },
+            { id: 10, image: "/Common/en_US-XY1-031-shellder.jpg" },
+            { id: 11, image: "/Common/en_US-XY1-033-staryu.jpg" },
+            { id: 12, image: "/Common/en_US-XY1-037-panpour.jpg" },
+            { id: 13, image: "/Common/en_US-XY1-039-froakie.jpg" },
+            { id: 14, image: "/Common/en_US-XY1-042-pikachu.jpg" },
+            { id: 15, image: "/Common/en_US-XY1-044-voltorb.jpg" },
+            { id: 16, image: "/Common/en_US-XY1-047-ekans.jpg" },
+            { id: 17, image: "/Common/en_US-XY1-049-spoink.jpg" },
+            { id: 18, image: "/Common/en_US-XY1-051-venipede.jpg" },
+            { id: 19, image: "/Common/en_US-XY1-054-phantump.jpg" },
+            { id: 20, image: "/Common/en_US-XY1-056-pumpkaboo.jpg" },
+            { id: 21, image: "/Common/en_US-XY1-058-diglett.jpg" },
+            { id: 22, image: "/Common/en_US-XY1-060-rhyhorn.jpg" },
+            { id: 23, image: "/Common/en_US-XY1-065-timburr.jpg" },
+            { id: 24, image: "/Common/en_US-XY1-069-sandile.jpg" },
+            { id: 25, image: "/Common/en_US-XY1-072-zorua.jpg" },
+            { id: 26, image: "/Common/en_US-XY1-075-inkay.jpg" },
+            { id: 27, image: "/Common/en_US-XY1-081-pawniard.jpg" },
+            { id: 28, image: "/Common/en_US-XY1-083-honedge.jpg" },
+            { id: 29, image: "/Common/en_US-XY1-087-jigglypuff.jpg" },
+            { id: 30, image: "/Common/en_US-XY1-088-jigglypuff.jpg" },
+            { id: 31, image: "/Common/en_US-XY1-092-spritzee.jpg" },
+            { id: 32, image: "/Common/en_US-XY1-094-swirlix.jpg" },
+            { id: 33, image: "/Common/en_US-XY1-098-doduo.jpg" },
+            { id: 34, image: "/Common/en_US-XY1-102-taillow.jpg" },
+            { id: 35, image: "/Common/en_US-XY1-104-skitty.jpg" },
+            { id: 36, image: "/Common/en_US-XY1-106-bidoof.jpg" },
+            { id: 37, image: "/Common/en_US-XY1-108-lillipup.jpg" },
+            { id: 38, image: "/Common/en_US-XY1-111-bunnelby.jpg" },
+            { id: 39, image: "/Common/en_US-XY1-113-fletchling.jpg" },
+        ];
+
+        const uncommonCards = [
+            { id: 40, image: "/Uncommon/en_US-XY1-004-kakuna.jpg" },
+            { id: 41, image: "/Uncommon/en_US-XY1-007-ledian.jpg" },
+            { id: 42, image: "/Uncommon/en_US-XY1-008-volbeat.jpg" },
+            { id: 43, image: "/Uncommon/en_US-XY1-009-illumise.jpg" },
+            { id: 44, image: "/Uncommon/en_US-XY1-013-quilladin.jpg" },
+            { id: 45, image: "/Uncommon/en_US-XY1-016-spewpa.jpg" },
+            { id: 46, image: "/Uncommon/en_US-XY1-025-braixen.jpg" },
+            { id: 47, image: "/Uncommon/en_US-XY1-027-fletchinder.jpg" },
+            { id: 48, image: "/Uncommon/en_US-XY1-036-corsola.jpg" },
+            { id: 49, image: "/Uncommon/en_US-XY1-040-frogadier.jpg" },
+            { id: 50, image: "/Uncommon/en_US-XY1-045-electrode.jpg" },
+            { id: 51, image: "/Uncommon/en_US-XY1-052-whirlipede.jpg" },
+            { id: 52, image: "/Uncommon/en_US-XY1-063-lunatone.jpg" },
+            { id: 53, image: "/Uncommon/en_US-XY1-064-solrock.jpg" },
+            { id: 54, image: "/Uncommon/en_US-XY1-066-gurdurr.jpg" },
+            { id: 55, image: "/Uncommon/en_US-XY1-068-sableye.jpg" },
+            { id: 56, image: "/Uncommon/en_US-XY1-070-krokorok.jpg" },
+            { id: 57, image: "/Uncommon/en_US-XY1-074-inkay.jpg" },
+            { id: 58, image: "/Uncommon/en_US-XY1-084-doublade.jpg" },
+            { id: 59, image: "/Uncommon/en_US-XY1-091-mr_mime.jpg" },
+            { id: 60, image: "/Uncommon/en_US-XY1-099-dodrio.jpg" },
+            { id: 61, image: "/Uncommon/en_US-XY1-101-dunsparce.jpg" },
+            { id: 62, image: "/Uncommon/en_US-XY1-105-delcatty.jpg" },
+            { id: 63, image: "/Uncommon/en_US-XY1-109-herdier.jpg" },
+            { id: 64, image: "/Uncommon/en_US-XY1-112-diggersby.jpg" },
+
+        ];
+
+        const rareCards = [
+            { id: 65, image: "/Rare/en_US-XY1-005-beedrill.jpg" },
+            { id: 66, image: "/Rare/en_US-XY1-011-simisage.jpg" },
+            { id: 67, image: "/Rare/en_US-XY1-014-chesnaught.jpg" },
+            { id: 68, image: "/Rare/en_US-XY1-017-vivillon.jpg" },
+            { id: 69, image: "/Rare/en_US-XY1-019-gogoat.jpg" },
+            { id: 70, image: "/Rare/en_US-XY1-021-magcargo.jpg" },
+            { id: 71, image: "/Rare/en_US-XY1-023-simisear.jpg" },
+            { id: 72, image: "/Rare/en_US-XY1-026-delphox.jpg" },
+            { id: 73, image: "/Rare/en_US-XY1-028-talonflame.jpg" },
+            { id: 74, image: "/Rare/en_US-XY1-032-cloyster.jpg" },
+            { id: 75, image: "/Rare/en_US-XY1-034-starmie.jpg" },
+            { id: 76, image: "/Rare/en_US-XY1-035-lapras.jpg" },
+            { id: 77, image: "/Rare/en_US-XY1-038-simipour.jpg" },
+            { id: 78, image: "/Rare/en_US-XY1-041-greninja.jpg" },
+            { id: 79, image: "/Rare/en_US-XY1-043-raichu.jpg" },
+            { id: 80, image: "/Rare/en_US-XY1-048-arbok.jpg" },
+            { id: 81, image: "/Rare/en_US-XY1-050-grumpig.jpg" },
+            { id: 82, image: "/Rare/en_US-XY1-053-scolipede.jpg" },
+            { id: 83, image: "/Rare/en_US-XY1-055-trevenant.jpg" },
+            { id: 84, image: "/Rare/en_US-XY1-057-gourgeist.jpg" },
+            { id: 85, image: "/Rare/en_US-XY1-059-dugtrio.jpg" },
+            { id: 86, image: "/Rare/en_US-XY1-061-rhydon.jpg" },
+            { id: 87, image: "/Rare/en_US-XY1-062-rhyperior.jpg" },
+            { id: 88, image: "/Rare/en_US-XY1-067-conkeldurr.jpg" },
+            { id: 89, image: "/Rare/en_US-XY1-071-krookodile.jpg" },
+            { id: 90, image: "/Rare/en_US-XY1-073-zoroark.jpg" },
+            { id: 91, image: "/Rare/en_US-XY1-076-malamar.jpg" },
+            { id: 92, image: "/Rare/en_US-XY1-078-yveltal.jpg" },
+            { id: 93, image: "/Rare/en_US-XY1-082-bisharp.jpg" },
+            { id: 94, image: "/Rare/en_US-XY1-085-aegislash.jpg" },
+            { id: 95, image: "/Rare/en_US-XY1-086-aegislash.jpg" },
+            { id: 96, image: "/Rare/en_US-XY1-090-wigglytuff.jpg" },
+            { id: 97, image: "/Rare/en_US-XY1-093-aromatisse.jpg" },
+            { id: 98, image: "/Rare/en_US-XY1-095-slurpuff.jpg" },
+            { id: 99, image: "/Rare/en_US-XY1-096-xerneas.jpg" },
+            { id: 100, image: "/Rare/en_US-XY1-100-tauros.jpg" },
+            { id: 101, image: "/Rare/en_US-XY1-103-swellow.jpg" },
+            { id: 102, image: "/Rare/en_US-XY1-107-bibarel.jpg" },
+            { id: 103, image: "/Rare/en_US-XY1-110-stoutland.jpg" },
+            { id: 104, image: "/Rare/en_US-XY1-114-furfrou.jpg" },
+
+        ];
+
+        const energyCards = [
+            { id: 105, image: "/Energy/en_US-XY1-132-grass_energy.jpg" },
+            { id: 106, image: "/Energy/en_US-XY1-133-fire_energy.jpg" },
+            { id: 107, image: "/Energy/en_US-XY1-134-water_energy.jpg" },
+            { id: 108, image: "/Energy/en_US-XY1-135-lightning_energy.jpg" },
+            { id: 109, image: "/Energy/en_US-XY1-136-psychic_energy.jpg" },
+            { id: 110, image: "/Energy/en_US-XY1-137-fighting_energy.jpg" },
+            { id: 111, image: "/Energy/en_US-XY1-138-darkness_energy.jpg" },
+            { id: 112, image: "/Energy/en_US-XY1-139-metal_energy.jpg" },
+            { id: 113, image: "/Energy/en_US-XY1-140-fairy_energy.jpg" },
+
+        ];
+
+        const trainerCards = [
+            { id: 114, image: "/Trainer/en_US-XY1-115-cassius.jpg" },
+            { id: 115, image: "/Trainer/en_US-XY1-116-evosoda.jpg" },
+            { id: 116, image: "/Trainer/en_US-XY1-117-fairy_garden.jpg" },
+            { id: 117, image: "/Trainer/en_US-XY1-118-great_ball.jpg" },
+            { id: 118, image: "/Trainer/en_US-XY1-119-hard_charm.jpg" },
+            { id: 119, image: "/Trainer/en_US-XY1-120-max_revive.jpg" },
+            { id: 120, image: "/Trainer/en_US-XY1-121-muscle_band.jpg" },
+            { id: 121, image: "/Trainer/en_US-XY1-122-professor_sycamore.jpg" },
+            { id: 122, image: "/Trainer/en_US-XY1-123-professors_letter.jpg" },
+            { id: 123, image: "/Trainer/en_US-XY1-124-red_card.jpg" },
+            { id: 124, image: "/Trainer/en_US-XY1-125-roller_skates.jpg" },
+            { id: 125, image: "/Trainer/en_US-XY1-126-shadow_circle.jpg" },
+            { id: 126, image: "/Trainer/en_US-XY1-127-shauna.jpg" },
+            { id: 127, image: "/Trainer/en_US-XY1-128-super_potion.jpg" },
+            { id: 128, image: "/Trainer/en_US-XY1-129-team_flare_grunt.jpg" },
+            { id: 129, image: "/Trainer/en_US-XY1-130-double_colorless_energy.jpg" },
+            { id: 130, image: "/Trainer/en_US-XY1-131-rainbow_energy.jpg" },
+
+        ];
+
+        const fullArts = [
+            { id: 131, image: "/Full_Arts/en_US-XY1-141-venusaur_ex.jpg" },
+            { id: 132, image: "/Full_Arts/en_US-XY1-142-blastoise_ex.jpg" },
+            { id: 133, image: "/Full_Arts/en_US-XY1-143-emolga_ex.jpg" },
+            { id: 134, image: "/Full_Arts/en_US-XY1-144-yveltal_ex.jpg" },
+            { id: 135, image: "/Full_Arts/en_US-XY1-145-skarmory_ex.jpg" },
+            { id: 136, image: "/Full_Arts/en_US-XY1-146-xerneas_ex.jpg" },
+
+        ]
+
+        const EX = [
+            { id: 137, image: "/EX/en_US-XY1-001-venusaur_ex.jpg" },
+            { id: 138, image: "/EX/en_US-XY1-002-m_venusaur_ex.jpg" },
+            { id: 139, image: "/EX/en_US-XY1-029-blastoise_ex.jpg" },
+            { id: 140, image: "/EX/en_US-XY1-030-m_blastoise_ex.jpg" },
+            { id: 141, image: "/EX/en_US-XY1-046-emolga_ex.jpg" },
+            { id: 142, image: "/EX/en_US-XY1-079-yveltal_ex.jpg" },
+            { id: 143, image: "/EX/en_US-XY1-080-skarmory_ex.jpg" },
+            { id: 144, image: "/EX/en_US-XY1-097-xerneas_ex.jpg" },
+        ]
+        // Define probabilities (you can adjust these based on desired rarity)
+        const EX_PROBABILITY = 0.10; // 10% chance for EX card
+        const FULL_ART_PROBABILITY = 0.90; // 1% chance for Full Art card
+
+        let packCards = [];
+        let currentIndex = 0;
+
+        function cutPack(event) {
+            const pack = document.getElementById("pack");
+            if (!pack) return;
+
+            pack.style.transform = "translateY(-150%)";
+            pack.style.opacity = "0";
+            setTimeout(() => {
+                pack.remove();
+                document.getElementById("cardsContainer").style.visibility = "visible";
+                openPack();
+            }, 500);
+        }
+
+        // Function to open the pack and display the cards with sequential animation
+        function openPack() {
+            const cardsContainer = document.getElementById("cardsContainer");
+            cardsContainer.innerHTML = "";
+            packCards = [];
+            currentIndex = 0;
+
+            function getRandomCard(pool, alreadyPicked) {
+                let randomIndex;
+                let selectedCard;
+                do {
+                    randomIndex = Math.floor(Math.random() * pool.length);
+                    selectedCard = pool[randomIndex];
+                } while (alreadyPicked.includes(selectedCard.id)); // Ensure no duplicates by checking the ID
+
+                alreadyPicked.push(selectedCard.id); // Add the card ID to the alreadyPicked list
+                pool.splice(randomIndex, 1); // Remove the selected card from the pool
+                return selectedCard;
+            }
+
+            // Track already selected card IDs to avoid duplicates in the same pack
+            let alreadyPicked = [];
+
+            // Select 4 common cards
+            for (let i = 0; i < 4; i++) {
+                packCards.push(getRandomCard([...commonCards], alreadyPicked));
+            }
+
+            // Select 3 uncommon cards
+            for (let i = 0; i < 3; i++) {
+                packCards.push(getRandomCard([...uncommonCards], alreadyPicked));
+            }
+
+            // Select 1 trainer card
+            packCards.push(getRandomCard([...trainerCards], alreadyPicked));
+
+            // Select 1 energy card
+            packCards.push(getRandomCard([...energyCards], alreadyPicked));
+
+            // Determine if the last card should be a rare, EX, or Full Art
+            let rareOrEXCard;
+
+            const randomChance = Math.random();
+            if (randomChance < FULL_ART_PROBABILITY) {
+                // Select Full Art card
+                rareOrEXCard = getRandomCard([...fullArts], alreadyPicked);
+            } else if (randomChance < FULL_ART_PROBABILITY + EX_PROBABILITY) {
+                // Select EX card
+                rareOrEXCard = getRandomCard([...EX], alreadyPicked);
+            } else {
+                // Select normal rare card
+                rareOrEXCard = getRandomCard([...rareCards], alreadyPicked);
+            }
+
+            // Add the selected rare/EX/Full Art card to the pack
+            packCards.push(rareOrEXCard);
+
+            // Create the card elements and append them to the container
+            for (let i = packCards.length - 1; i >= 0; i--) {
+                let cardElement = document.createElement("div");
+                cardElement.classList.add("card");
+                cardElement.style.zIndex = packCards.length - i;
+
+                let cardImage = document.createElement("img");
+                cardImage.src = `images/${packCards[i].image}`;
+                cardElement.appendChild(cardImage);
+
+                cardElement.onclick = (event) => {
+                    revealNextCard(event, i === packCards.length - 1);
+                    addToBinder(packCards[i].image, packCards[i].id); // Add card with ID to binder
+                };
+
+                cardsContainer.appendChild(cardElement);
+            }
+        }
+
+        // Function to reveal the next card and prevent duplicates in the binder
+        function revealNextCard(event, isRare) {
+            let card = event.currentTarget;
+            if (currentIndex < packCards.length) {
+                card.style.transform = "translateY(-250px)";
+                card.style.opacity = "0";
+                setTimeout(() => {
+                    card.remove();
+                    if (currentIndex === packCards.length - 1) {
+                        // If it's the last card (rare card), execute specific actions
+                        console.log('Last card revealed: Rare');
+                    }
+                }, 1000);
+                currentIndex++;
+            }
+        }
+
+        // Function to add card to binder and prevent duplicates
+        function addToBinder(image, id) {
+            let binder = JSON.parse(localStorage.getItem('binderCardsXY')) || [];
+
+            // Prevent adding duplicate cards based on both ID and Image path
+            if (!binder.some(item => item.id === id)) {
+                binder.push({ id, image });
+                localStorage.setItem('binderCardsXY', JSON.stringify(binder));
+            }
+        }
+
+
+        // Array of possible background images
+        const packBackgrounds = [
+            "images/Packs/blastoisePack.jpg",
+            "images/Packs/venusaurPack.jpg",
+            "images/Packs/xernausPack.jpg",
+            "images/Packs/yveltalPack.jpg"
+        ];
+
+        // Select a random background image
+        const randomBackground = packBackgrounds[Math.floor(Math.random() * packBackgrounds.length)];
+
+        // Set the background image of the pack
+        document.getElementById("pack").style.backgroundImage = `url(${randomBackground})`;
+
+
+
+
+    </script>
+</body>
+
+</html>
