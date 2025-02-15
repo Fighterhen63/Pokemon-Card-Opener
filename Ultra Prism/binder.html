@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial=" 1.0">
+    <title>Card Binder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .binder-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1000px;
+            overflow-y: auto;
+        }
+
+        .card {
+            width: 180px;
+            height: 250px;
+            background-color: #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .card-title {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-weight: bold;
+            color: #fff;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .empty-card {
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>My Pokémon Card Binder</h1>
+    <div class="binder-container" id="binderContainer">
+        <!-- Cards will be dynamically added here -->
+    </div>
+
+    <script>
+        // Load cards from localStorage
+        const binderContainer = document.getElementById("binderContainer");
+
+        function loadCards() {
+            const binderCardsUltraPrism = JSON.parse(localStorage.getItem('binderCardsUltraPrism')) || [];
+
+            if (binderCardsUltraPrism.length === 0) {
+                console.log('No cards in binder.');
+                return;
+            }
+
+            // Ensure that every card has a valid 'id' property
+            binderCardsUltraPrism.forEach(card => {
+                if (!card.id) {
+                    console.warn('Card missing id:', card);
+                    card.id = Date.now();  // Fallback to using the current timestamp if no ID exists
+                }
+            });
+
+            // Get the highest card ID to determine the range of expected IDs
+            const maxId = Math.max(...binderCardsUltraPrism.map(card => card.id));
+            
+            // Iterate through all possible card IDs and create a card or an empty slot
+            for (let i = 1; i <= maxId; i++) {
+                const existingCard = binderCardsUltraPrism.find(card => card.id === i);
+
+                const cardElement = document.createElement("div");
+                cardElement.classList.add("card");
+
+                if (existingCard) {
+                    const cardImageElement = document.createElement("img");
+                    const imagePath = `images${existingCard.image}`;  // Updated to handle proper path
+                    cardImageElement.src = imagePath;
+                    cardImageElement.alt = existingCard.id;  // Set alt text to 'id' for accessibility
+                    cardElement.appendChild(cardImageElement);
+
+                    const cardTitle = document.createElement("div");
+                    cardTitle.classList.add("card-title");
+                    cardTitle.textContent = `Card ${existingCard.id}`;  // Optional: Display the card ID or title
+                    cardElement.appendChild(cardTitle);
+                } else {
+                    // Create an empty card slot if the card is missing
+                    cardElement.classList.add("empty-card");
+                    const emptyTitle = document.createElement("div");
+                    emptyTitle.classList.add("card-title");
+                    emptyTitle.textContent = `Empty Slot ${i}`;
+                    cardElement.appendChild(emptyTitle);
+                }
+
+                binderContainer.appendChild(cardElement);
+            }
+        }
+
+        loadCards(); // Load cards when the page is loaded
+    </script>
+</body>
+
+</html>
