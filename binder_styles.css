@@ -72,7 +72,7 @@ body {
     border-radius: 15px;
     /* border: 2px dashed #d35400; Fire-type color */
     position: relative;
-    background-image: url('/Home/Global_Packs/tcg-card-back-2x.jpg');
+    background-image: url('Home/Global_Packs/tcg-card-back-2x.jpg');
     background-size: cover;
 }
 
