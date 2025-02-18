@@ -5,30 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Packs</title>
     <link rel="stylesheet" href="Home/main_styles.css">
+    <script>
+        // Function to filter packs based on the set name
+        function filterPacks() {
+            const searchInput = document.getElementById("packSearch").value.toLowerCase();
+            const packs = document.querySelectorAll(".pokemon-pack-container");
+
+            packs.forEach(pack => {
+                const setName = pack.getAttribute("data-set-name").toLowerCase();
+                if (setName.includes(searchInput)) {
+                    pack.style.display = "block"; // Show if it matches
+                } else {
+                    pack.style.display = "none"; // Hide if it doesn't match
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
    <h1>What Set Will You Capture Today?</h1>
-   <input id="packSearch" placeholder="Search For Packs (Coming Soon)">
+   <input id="packSearch" placeholder="Search For Packs" oninput="filterPacks()">
 
     <div class="container">
-        <a target="_blank" href="Base Set App/index.html">
-            <img src="Home/Global_Packs/blastoisePack.jpg" alt="Pokémon Pack 1" class="pokemon-pack">
-        </a>
-        <a  target="_blank" href="Pokemon XY Base Set/index.html">
-            <img src="Home/Global_Packs/blastoisePackXY.jpg" alt="Pokémon Pack 2" class="pokemon-pack">
-        </a>
-        <a  target="_blank" href="Ultra Prism/index.html">
-            <img src="Home/Global_Packs/leafeonPack.png" alt="Coming Soon!" class="pokemon-pack">
-        </a>
-        <a  target="_blank" href="">
-            <img src="pokemon-pack4.jpg" alt="Coming Soon!" class="pokemon-pack">
-        </a>
+        <div class="pokemon-pack-container" data-set-name="Base Set">
+            <a target="_blank" href="Base Set App/index.html">
+                <img src="Home/Global_Packs/blastoisePack.jpg" alt="Pokémon Pack 1" class="pokemon-pack">
+            </a>
+        </div>
+        
+        <div class="pokemon-pack-container" data-set-name="Pokemon XY Base Set">
+            <a target="_blank" href="Pokemon XY Base Set/index.html">
+                <img src="Home/Global_Packs/blastoisePackXY.jpg" alt="Pokémon Pack 2" class="pokemon-pack">
+            </a>
+        </div>
+
+        <div class="pokemon-pack-container" data-set-name="Ultra Prism">
+            <a target="_blank" href="Ultra Prism/index.html">
+                <img src="Home/Global_Packs/leafeonPack.png" alt="Coming Soon!" class="pokemon-pack">
+            </a>
+        </div>
+
+        <div class="pokemon-pack-container" data-set-name="Steam Siege">
+            <a target="_blank" href="Steam Siege/index.html">
+                <img src="Home/Global_Packs/volcanionPack.jpg" alt="Coming Soon!" class="pokemon-pack">
+            </a>
+        </div>
     </div>
 
     <footer>
         <p>&copy; 2025 Pokémon Packs. All rights reserved.</p>
-        <p>Visit The  <a href="https://github.com/Fighterhen63/Pokemon-Card-Opener" target="_blank">Github</a></p>
+        <p>Visit The <a href="https://github.com/Fighterhen63/Pokemon-Card-Opener" target="_blank">Github</a></p>
     </footer>
 
 </body>
