@@ -1,0 +1,177 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background: radial-gradient(circle, #1a1a1a, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    color: white;
+    animation: backgroundAnimation 10s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+    0% { background: radial-gradient(circle, #1a1a1a, #000); }
+    100% { background: radial-gradient(circle, #4a4a4a, #111); }
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    letter-spacing: 1.5px;
+    animation: titleAnimation 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes titleAnimation {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+.pack-container {
+    position: relative;
+    width: 220px;
+    height: 360px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+    border-radius: 5%;
+
+}
+
+.pack-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.6);
+}
+
+.pack {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    background-size: cover;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.5);
+    transform-origin: center;
+}
+
+.cards-container {
+    position: absolute;
+    width: 220px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    gap: 10px;
+    
+}
+
+.card {
+    width: 160px;
+    height: 220px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: absolute;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    transform: scale(1); /* Add some scale for initial effect */
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.card.reveal {
+    transform: translateY(-250px); /* Slide up */
+    opacity: 0; /* Fade out */
+}
+
+
+.card img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+}
+
+
+
+.card:nth-child(odd) {
+    animation: cardAnimationOdd 1s ease-in-out;
+}
+
+.card:nth-child(even) {
+    animation: cardAnimationEven 1s ease-in-out;
+}
+
+@keyframes cardAnimationOdd {
+    0% { transform: translateY(100px) scale(1); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes cardAnimationEven {
+    0% { transform: translateY(100px) scale(1); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.binder-btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #FFD700, #FF8C00);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    box-shadow: 0 5px 20px rgba(255, 165, 0, 0.6);
+}
+
+.binder-btn:hover {
+    background: linear-gradient(45deg, #FF8C00, #FF4500);
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 140, 0, 0.8);
+}
+
+.binder-btn:focus {
+    outline: none;
+}
+
+
+/* Card container styles */
+#cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Hide overflow if necessary */
+}
+
+/* Card styles */
+.card {
+    width: 100%; /* Make card width 100% of the container */
+    height: 300px; /* Make card height 100% of the container */
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: absolute;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    transform: scale(1); /* Add some scale for initial effect */
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    
+}
+
+.card.reveal {
+    transform: translateY(-250px); /* Slide up */
+    opacity: 0; /* Fade out */
+}
