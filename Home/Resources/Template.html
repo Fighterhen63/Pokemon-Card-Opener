@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Card Pack Opener</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <h1 class="title">Ultra Prism Pokémon Card Pack Opener</h1>
+    <br>
+
+    <div class="pack-container" onmousedown="cutPack(event)">
+        <div class="pack" id="pack"></div>
+        <div class="cards-container" id="cardsContainer"></div>
+    </div>
+
+    <button class="binder-btn" onclick="window.open('binder.html', '_blank')">Go to Binder</button>
+    <button class="binder-btn" onclick="window.location.href='index.html'">New Pack</button>
+
+
+
+    <script>
+
+
+        const commonCards = [
+
+        ]
+
+        const uncommonCards = [
+
+        ]
+
+        const rareCards = [
+
+        ]
+
+        const energyCards = [
+        ];
+
+
+        const trainerCards = [
+        ];
+
+        const GX = [
+
+        ];
+
+        const fullArts = [
+        ]
+
+
+        // Define probabilities (you can adjust these based on desired rarity)
+        const EX_PROBABILITY = 0.10; // 10% chance for EX card
+        const FULL_ART_PROBABILITY = 0.01; // 1% chance for Full Art card
+
+        let packCards = [];
+        let currentIndex = 0;
+        let isAnimating = false;
+
+        function generateNewPack() {
+            // Reset the cards container to prepare for a new pack
+            const cardsContainer = document.getElementById("cardsContainer");
+            cardsContainer.style.visibility = "hidden"; // Hide cards while resetting
+            cardsContainer.innerHTML = ""; // Clear current cards
+
+            const pack = document.getElementById("pack");
+            if (pack) {
+                // Reset the pack animation if it's visible
+                pack.style.transform = "translateY(0)";
+                pack.style.opacity = "1";
+            }
+
+            // Open a new pack
+            openPack();
+        }
+
+        function cutPack(event) {
+            const pack = document.getElementById("pack");
+            if (!pack) return;
+
+            pack.style.transform = "translateY(-150%)";
+            pack.style.opacity = "0";
+
+            // Add a slight delay before removing the pack to ensure the animation finishes
+            setTimeout(() => {
+                pack.remove();
+                document.getElementById("cardsContainer").style.visibility = "visible";
+                openPack();
+            }, 600); // Slight delay (adjust if necessary)
+        }
+
+        // Function to open the pack and display the cards with sequential animation
+        function openPack() {
+            const cardsContainer = document.getElementById("cardsContainer");
+            cardsContainer.innerHTML = "";
+            packCards = [];
+            currentIndex = 0;
+
+            function getRandomCard(pool, alreadyPicked) {
+                let randomIndex;
+                let selectedCard;
+                do {
+                    randomIndex = Math.floor(Math.random() * pool.length);
+                    selectedCard = pool[randomIndex];
+                } while (alreadyPicked.includes(selectedCard.id)); // Ensure no duplicates by checking the ID
+
+                alreadyPicked.push(selectedCard.id); // Add the card ID to the alreadyPicked list
+                pool.splice(randomIndex, 1); // Remove the selected card from the pool
+                return selectedCard;
+            }
+
+            // Track already selected card IDs to avoid duplicates in the same pack
+            let alreadyPicked = [];
+
+            // Select 4 common cards
+            for (let i = 0; i < 4; i++) {
+                packCards.push(getRandomCard([...commonCards], alreadyPicked));
+            }
+
+            // Select 3 uncommon cards
+            for (let i = 0; i < 3; i++) {
+                packCards.push(getRandomCard([...uncommonCards], alreadyPicked));
+            }
+
+            // Select 1 trainer card
+            packCards.push(getRandomCard([...trainerCards], alreadyPicked));
+
+            // Select 1 energy card
+            packCards.push(getRandomCard([...energyCards], alreadyPicked));
+
+            // Determine if the last card should be a rare, EX, or Full Art
+            let rareOrEXCard;
+
+            const randomChance = Math.random();
+            if (randomChance < FULL_ART_PROBABILITY) {
+                // Select Full Art card
+                rareOrEXCard = getRandomCard([...fullArts], alreadyPicked);
+            } else if (randomChance < FULL_ART_PROBABILITY + EX_PROBABILITY) {
+                // Select EX card
+                rareOrEXCard = getRandomCard([...GX], alreadyPicked);
+            } else {
+                // Select normal rare card
+                rareOrEXCard = getRandomCard([...rareCards], alreadyPicked);
+            }
+
+            // Add the selected rare/EX/Full Art card to the pack
+            packCards.push(rareOrEXCard);
+
+            // Create the card elements and append them to the container
+            for (let i = packCards.length - 1; i >= 0; i--) {
+                let cardElement = document.createElement("div");
+                cardElement.classList.add("card");
+                cardElement.style.zIndex = packCards.length - i;
+
+                let cardImage = document.createElement("img");
+                cardImage.src = `images/${packCards[i].image}`;
+                cardElement.appendChild(cardImage);
+
+                cardElement.onclick = (event) => {
+                    revealNextCard(event, i === packCards.length - 1);
+                    addToBinder(packCards[i].image, packCards[i].id); // Add card with ID to binder
+                };
+
+                cardsContainer.appendChild(cardElement);
+            }
+        }
+
+        // Function to reveal the next card and prevent duplicates in the binder
+        function revealNextCard(event, isRare) {
+            let card = event.currentTarget;
+
+            // Check if card is already being processed
+            if (card.style.opacity === "0" || card.classList.contains('revealed')) {
+                return;
+            }
+
+            // Mark card as revealed to prevent multiple clicks
+            card.classList.add('revealed');
+            card.style.transform = "translateY(-250px)";
+            card.style.opacity = "0";
+
+            setTimeout(() => {
+                card.remove();
+                if (currentIndex === packCards.length - 1) {
+                    // If it's the last card (rare card), execute specific actions
+                    console.log('Last card revealed: Rare');
+                }
+                currentIndex++;
+                // Check if there are remaining cards to be revealed
+                if (currentIndex < packCards.length) {
+                    revealNextCardForNextCard();
+                }
+            }, 1000);
+        }
+
+        // Function to add card to binder and prevent duplicates
+        function addToBinder(image, id) {
+            let binder = JSON.parse(localStorage.getItem('binderCardsUltraPrism')) || [];
+
+            // Prevent adding duplicate cards based on both ID and Image path
+            if (!binder.some(item => item.id === id)) {
+                binder.push({ id, image });
+                localStorage.setItem('binderCardsUltraPrism', JSON.stringify(binder));
+            }
+        }
+
+
+        // Array of possible background images
+        const packImages = [
+            "images/Packs/leafeonPack.png",
+        ];
+
+        // Select a random background image
+        const randomBackground = packImages[Math.floor(Math.random() * packImages.length)];
+
+        // Set the background image of the pack
+        document.getElementById("pack").style.backgroundImage = `url(${randomBackground})`;
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+ls -1 | while read image ; do   echo \{id: $((++i+NUMBER_ID_YOUR_ON)), image: \"/FOLDERNAME/$image\"}\,; done
+
+Also Remember to rename the local storage per set! :)
+
+Links:
+Pokemon Card List: https://www.tcgcollector.com/sets/11129/ultra-prism?releaseDateOrder=newToOld&displayAs=images
+Pack Images: https://bulbapedia.bulbagarden.net/wiki/ 
+Card Images: https:pkmncards.com/set
