@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Card Pack Opener</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <h1 class="title">Cosmic Eclipse Pokémon Card Pack Opener</h1>
+    <br>
+
+    <div class="pack-container" onmousedown="cutPack(event)">
+        <div class="pack" id="pack"></div>
+        <div class="cards-container" id="cardsContainer"></div>
+    </div>
+
+    <button class="binder-btn" onclick="window.open('binder.html', '_blank')">Go to Binder</button>
+    <button class="binder-btn" onclick="window.location.href='index.html'">New Pack</button>
+
+
+
+    <script>
+
+
+        const commonCards = [
+            { id: 1, image: "/Common/Sneasel.png" },
+            { id: 2, image: "/Common/Alolan_Vulpix.png" },
+            { id: 3, image: "/Common/Wailmer.png" },
+            { id: 4, image: "/Common/Jangmo-o.png" },
+            { id: 5, image: "/Common/Dewpider.png" },
+            { id: 6, image: "/Common/Eevee.png" },
+            { id: 7, image: "/Common/Rufflet.png" },
+            { id: 8, image: "/Common/Alolan_Grimer.png" },
+            { id: 9, image: "/Common/Trapinch.png" },
+            { id: 10, image: "/Common/Flabébé.png" },
+            { id: 11, image: "/Common/Alolan_Meowth.png" },
+            { id: 12, image: "/Common/Rowlet.png" },
+            { id: 13, image: "/Common/Duskull.png" },
+            { id: 14, image: "/Common/Pancham.png" },
+            { id: 15, image: "/Common/Piplup.png" },
+            { id: 16, image: "/Common/Spheal.png" },
+            { id: 17, image: "/Common/Aipom.png" },
+            { id: 18, image: "/Common/Ducklett.png" },
+            { id: 19, image: "/Common/Koffing.png" },
+            { id: 20, image: "/Common/Helioptile.png" },
+            { id: 21, image: "/Common/Psyduck.png" },
+            { id: 22, image: "/Common/Lillipup.png" },
+            { id: 23, image: "/Common/Swirlix.png" },
+            { id: 24, image: "/Common/Pikachu.png" },
+            { id: 25, image: "/Common/Palpitoad.png" },
+            { id: 26, image: "/Common/Azurill.png" },
+            { id: 27, image: "/Common/Crabrawler.png" },
+            { id: 28, image: "/Common/Drilbur.png" },
+            { id: 29, image: "/Common/Stufful.png" },
+            { id: 30, image: "/Common/Kricketot.png" },
+            { id: 31, image: "/Common/Phantump.png" },
+            { id: 32, image: "/Common/Tepig.png" },
+            { id: 33, image: "/Common/Litleo.png" },
+            { id: 34, image: "/Common/Pawniard.png" },
+            { id: 35, image: "/Common/Cottonee.png" },
+            { id: 36, image: "/Common/Sandygast.png" },
+            { id: 37, image: "/Common/Golett.png" },
+            { id: 38, image: "/Common/Carvanha.png" },
+            { id: 39, image: "/Common/Teddiursa.png" },
+            { id: 40, image: "/Common/Deerling.png" },
+            { id: 41, image: "/Common/Sunkern.png" },
+            { id: 42, image: "/Common/Chinchou.png" },
+            { id: 43, image: "/Common/Tangela.png" },
+            { id: 44, image: "/Common/Slugma.png" },
+            { id: 45, image: "/Common/Tympole.png" },
+            { id: 46, image: "/Common/Rockruff.png" },
+            { id: 47, image: "/Common/Togedemaru.png" },
+            { id: 48, image: "/Common/Skrelp.png" },
+            { id: 49, image: "/Common/Nosepass.png" },
+            { id: 50, image: "/Common/Onix.png" },
+            { id: 51, image: "/Common/Ralts.png" },
+            { id: 52, image: "/Common/Snorunt.png" },
+            { id: 53, image: "/Common/Passimian.png" },
+            { id: 54, image: "/Common/Cosmog.png" },
+            { id: 55, image: "/Common/Oddish.png" },
+            { id: 56, image: "/Common/Woobat.png" },
+            { id: 57, image: "/Common/Ponyta.png" },
+            { id: 58, image: "/Common/Alolan_Sandshrew.png" },
+            { id: 59, image: "/Common/Magnemite.png" },
+            { id: 60, image: "/Common/Natu.png" },
+        ]
+
+        const uncommonCards = [
+            { id: 174, image: "/Uncommon/Dusclops.png" },
+            { id: 175, image: "/Uncommon/Golduck.png" },
+            { id: 176, image: "/Uncommon/Probopass.png" },
+            { id: 177, image: "/Uncommon/Prinplup.png" },
+            { id: 182, image: "/Uncommon/Igglybuff.png" },
+            { id: 183, image: "/Uncommon/Gloom.png" },
+            { id: 186, image: "/Uncommon/Cosmoem.png" },
+            { id: 187, image: "/Uncommon/Lileep.png" },
+            { id: 190, image: "/Uncommon/Larvesta.png" },
+            { id: 191, image: "/Uncommon/Clefairy.png" },
+            { id: 192, image: "/Uncommon/Throh.png" },
+            { id: 193, image: "/Uncommon/Kricketune.png" },
+            { id: 195, image: "/Uncommon/Dhelmise.png" },
+            { id: 196, image: "/Uncommon/Tag_Call.png" },
+            { id: 197, image: "/Uncommon/Floette.png" },
+            { id: 199, image: "/Uncommon/Type:_Null.png" },
+            { id: 200, image: "/Uncommon/Torkoal.png" },
+            { id: 201, image: "/Uncommon/Rapidash.png" },
+            { id: 203, image: "/Uncommon/Absol.png" },
+            { id: 204, image: "/Uncommon/Heracross.png" },
+            { id: 205, image: "/Uncommon/Tangrowth.png" },
+            { id: 207, image: "/Uncommon/Kirlia.png" },
+            { id: 209, image: "/Uncommon/Pyroar.png" },
+            { id: 211, image: "/Uncommon/Pignite.png" },
+            { id: 212, image: "/Uncommon/Vaporeon.png" },
+            { id: 213, image: "/Uncommon/Herdier.png" },
+            { id: 215, image: "/Uncommon/Mawile.png" },
+            { id: 216, image: "/Uncommon/Mimikyu.png" },
+            { id: 217, image: "/Uncommon/Anorith.png" },
+            { id: 218, image: "/Uncommon/Clay.png" },
+            { id: 219, image: "/Uncommon/Sealeo.png" },
+            { id: 220, image: "/Uncommon/Bisharp.png" },
+            { id: 221, image: "/Uncommon/Dartrix.png" },
+            { id: 222, image: "/Uncommon/Togedemaru.png" },
+            { id: 223, image: "/Uncommon/Ambipom.png" },
+            { id: 228, image: "/Uncommon/Tropius.png" },
+            { id: 230, image: "/Uncommon/Araquanid.png" },
+            { id: 231, image: "/Uncommon/Hakamo-o.png" },
+            { id: 232, image: "/Uncommon/Zangoose.png" },
+            { id: 233, image: "/Uncommon/Jolteon.png" },
+            { id: 235, image: "/Uncommon/Vibrava.png" },
+            { id: 236, image: "/Uncommon/Rotom.png" },
+            { id: 237, image: "/Uncommon/Pangoro.png" },
+            { id: 238, image: "/Uncommon/Flareon.png" },
+        ]
+
+        const rareCards = [
+            { id: 61, image: "/Rare/Whimsicott.png" },
+            { id: 62, image: "/Rare/Xatu.png" },
+            { id: 63, image: "/Rare/Trevenant.png" },
+            { id: 64, image: "/Rare/Slurpuff.png" },
+            { id: 65, image: "/Rare/Ursaring.png" },
+            { id: 66, image: "/Rare/Groudon.png" },
+            { id: 67, image: "/Rare/Dragalge.png" },
+            { id: 68, image: "/Rare/Alolan_Muk.png" },
+            { id: 69, image: "/Rare/Glalie.png" },
+            { id: 70, image: "/Rare/Bewear.png" },
+            { id: 71, image: "/Rare/Armaldo.png" },
+            { id: 72, image: "/Rare/Phione.png" },
+            { id: 73, image: "/Rare/Lanturn.png" },
+            { id: 74, image: "/Rare/Swanna.png" },
+            { id: 75, image: "/Rare/Sylveon.png" },
+            { id: 76, image: "/Rare/Crabominable.png" },
+            { id: 77, image: "/Rare/Palossand.png" },
+            { id: 78, image: "/Rare/Swoobat.png" },
+            { id: 79, image: "/Rare/Emboar.png" },
+            { id: 80, image: "/Rare/Sunflora.png" },
+            { id: 81, image: "/Rare/Walrein.png" },
+            { id: 82, image: "/Rare/Kyogre.png" },
+            { id: 83, image: "/Rare/Wailord.png" },
+            { id: 84, image: "/Rare/Drampa.png" },
+            { id: 85, image: "/Rare/Heliolisk.png" },
+            { id: 86, image: "/Rare/Mimikyu.png" },
+            { id: 87, image: "/Rare/Alolan_Sandslash.png" },
+            { id: 88, image: "/Rare/Braviary.png" },
+            { id: 89, image: "/Rare/Empoleon.png" },
+            { id: 90, image: "/Rare/Magcargo.png" },
+            { id: 91, image: "/Rare/Weezing.png" },
+            { id: 92, image: "/Rare/Seismitoad.png" },
+            { id: 93, image: "/Rare/Raichu.png" },
+            { id: 94, image: "/Rare/Cradily.png" },
+            { id: 95, image: "/Rare/Entei.png" },
+            { id: 96, image: "/Rare/Weavile.png" },
+            { id: 97, image: "/Rare/Golurk.png" },
+            { id: 98, image: "/Rare/Marshadow.png" },
+            { id: 99, image: "/Rare Holo/Steelix.png" },
+            { id: 100, image: "/Rare Holo/Solgaleo.png" },
+            { id: 101, image: "/Rare Holo/Stoutland.png" },
+            { id: 102, image: "/Rare Holo/Buzzwole.png" },
+            { id: 103, image: "/Rare Holo/Alolan_Ninetales.png" },
+            { id: 104, image: "/Rare Holo/Rosa.png" },
+            { id: 105, image: "/Rare Holo/Gallade.png" },
+            { id: 106, image: "/Rare Holo/Kommo-o.png" },
+            { id: 107, image: "/Rare Holo/Decidueye.png" },
+            { id: 108, image: "/Rare Holo/Magneton.png" },
+            { id: 109, image: "/Rare Holo/Lunala.png" },
+            { id: 110, image: "/Rare Holo/Guzzlord.png" },
+            { id: 111, image: "/Rare Holo/Lycanroc.png" },
+            { id: 112, image: "/Rare Holo/Dusknoir.png" },
+            { id: 113, image: "/Rare Holo/Blacephalon.png" },
+            { id: 114, image: "/Rare Holo/Florges.png" },
+            { id: 115, image: "/Rare Holo/Sawsbuck.png" },
+            { id: 116, image: "/Rare Holo/Ultra_Necrozma.png" },
+            { id: 117, image: "/Rare Holo/Excadrill.png" },
+            { id: 118, image: "/Rare Holo/Victini.png" },
+            { id: 119, image: "/Rare Holo/Black_Kyurem.png" },
+            { id: 120, image: "/Rare Holo/Wishiwashi.png" },
+        ]
+
+        const energyCards = [
+            { id: 240, image: "/Energy/en_US-SM_Energy-001-grass_energy-1.jpg" },
+            { id: 241, image: "/Energy/en_US-SM_Energy-002-fire_energy-1.jpg" },
+            { id: 242, image: "/Energy/en_US-SM_Energy-003-water_energy-1.jpg" },
+            { id: 243, image: "/Energy/en_US-SM_Energy-004-lightning_energy-1.jpg" },
+            { id: 244, image: "/Energy/en_US-SM_Energy-005-psychic_energy-1.jpg" },
+            { id: 245, image: "/Energy/en_US-SM_Energy-006-fighting_energy-1.jpg" },
+            { id: 246, image: "/Energy/en_US-SM_Energy-007-darkness_energy-1.jpg" },
+            { id: 247, image: "/Energy/en_US-SM_Energy-008-metal_energy-1.jpg" },
+            { id: 248, image: "/Energy/en_US-SM_Energy-009-fairy_energy-1.jpg" },
+
+        ];
+
+
+        const trainerCards = [
+            { id: 178, image: "/Uncommon/Will.png" },
+            { id: 179, image: "/Uncommon/Lillie's_Poké_Doll.png" },
+            { id: 180, image: "/Uncommon/Island_Challenge_Amulet.png" },
+            { id: 181, image: "/Uncommon/Red_&_Blue.png" },
+            { id: 184, image: "/Uncommon/Guzma_&_Hala.png" },
+            { id: 185, image: "/Uncommon/Roxie.png" },
+            { id: 188, image: "/Uncommon/Beastite.png" },
+            { id: 189, image: "/Uncommon/Bellelba_&_Brycen-Man.png" },
+            { id: 194, image: "/Uncommon/Chaotic_Swell.png" },
+            { id: 198, image: "/Uncommon/Lillie's_Full_Force.png" },
+            { id: 202, image: "/Uncommon/Draw_Energy.png" },
+            { id: 206, image: "/Uncommon/Misty_&_Lorelei.png" },
+            { id: 208, image: "/Uncommon/N's_Resolve.png" },
+            { id: 210, image: "/Uncommon/Great_Catcher.png" },
+            { id: 229, image: "/Uncommon/Lana's_Fishing_Rod.png" },
+            { id: 214, image: "/Uncommon/Roller_Skater.png" },
+            { id: 224, image: "/Uncommon/Dragonium_Z:_Dragon_Claw.png" },
+            { id: 225, image: "/Uncommon/Professor_Oak's_Setup.png" },
+            { id: 226, image: "/Uncommon/Erika.png" },
+            { id: 227, image: "/Uncommon/Unidentified_Fossil.png" },
+            { id: 234, image: "/Uncommon/Mallow_&_Lana.png" },
+            { id: 239, image: "/Uncommon/Cynthia_&_Caitlin.png" },
+        ];
+
+        const GX = [
+            { id: 121, image: "/Rare Holo GX/Wishiwashi-GX.png" },
+            { id: 122, image: "/Rare Holo GX/Arceus_&_Dialga_&_Palkia-GX.png" },
+            { id: 123, image: "/Rare Holo GX/Flygon-GX.png" },
+            { id: 124, image: "/Rare Holo GX/Oricorio-GX.png" },
+            { id: 125, image: "/Rare Holo GX/Naganadel_&_Guzzlord-GX.png" },
+            { id: 126, image: "/Rare Holo GX/Togepi_&_Cleffa_&_Igglybuff-GX.png" },
+            { id: 127, image: "/Rare Holo GX/Reshiram_&_Zekrom-GX.png" },
+            { id: 128, image: "/Rare Holo GX/Blastoise_&_Piplup-GX.png" },
+            { id: 129, image: "/Rare Holo GX/Venusaur_&_Snivy-GX.png" },
+            { id: 130, image: "/Rare Holo GX/Mega_Lopunny_&_Jigglypuff-GX.png" },
+            { id: 131, image: "/Rare Holo GX/Silvally-GX.png" },
+            { id: 132, image: "/Rare Holo GX/Vileplume-GX.png" },
+            { id: 133, image: "/Rare Holo GX/Volcarona-GX.png" },
+            { id: 134, image: "/Rare Holo GX/Alolan_Persian-GX.png" },
+            { id: 135, image: "/Rare Holo GX/Charizard_&_Braixen-GX.png" },
+            { id: 136, image: "/Rare Holo GX/Solgaleo_&_Lunala-GX.png" },
+        ];
+
+        const fullArts = [
+            { id: 137, image: "/Rare Rainbow/Venusaur_&_Snivy-GX.png" },
+            { id: 138, image: "/Rare Secret/Steelix.png" },
+            { id: 139, image: "/Rare Secret/Stoutland.png" },
+            { id: 140, image: "/Rare Secret/Gallade.png" },
+            { id: 141, image: "/Rare Secret/Piplup.png" },
+            { id: 142, image: "/Rare Secret/Koffing.png" },
+            { id: 143, image: "/Rare Secret/Pikachu.png" },
+            { id: 144, image: "/Rare Secret/Torkoal.png" },
+            { id: 145, image: "/Rare Secret/Mimikyu.png" },
+            { id: 146, image: "/Rare Secret/Excadrill.png" },
+            { id: 147, image: "/Rare Secret/Magnemite.png" },
+            { id: 148, image: "/Rare Secret/Weavile.png" },
+            { id: 149, image: "/Rare Secret/Wishiwashi.png" },
+            { id: 150, image: "/Rare Ultra/Red_&_Blue.png" },
+            { id: 151, image: "/Rare Ultra/Arceus_&_Dialga_&_Palkia-GX.png" },
+            { id: 152, image: "/Rare Ultra/Flygon-GX.png" },
+            { id: 153, image: "/Rare Ultra/Guzma_&_Hala.png" },
+            { id: 154, image: "/Rare Ultra/Oricorio-GX.png" },
+            { id: 155, image: "/Rare Ultra/Rosa.png" },
+            { id: 156, image: "/Rare Ultra/Lillie's_Full_Force.png" },
+            { id: 157, image: "/Rare Ultra/Naganadel_&_Guzzlord-GX.png" },
+            { id: 158, image: "/Rare Ultra/Togepi_&_Cleffa_&_Igglybuff-GX.png" },
+            { id: 159, image: "/Rare Ultra/Reshiram_&_Zekrom-GX.png" },
+            { id: 160, image: "/Rare Ultra/Blastoise_&_Piplup-GX.png" },
+            { id: 161, image: "/Rare Ultra/N's_Resolve.png" },
+            { id: 162, image: "/Rare Ultra/Roller_Skater.png" },
+            { id: 163, image: "/Rare Ultra/Venusaur_&_Snivy-GX.png" },
+            { id: 164, image: "/Rare Ultra/Mega_Lopunny_&_Jigglypuff-GX.png" },
+            { id: 165, image: "/Rare Ultra/Silvally-GX.png" },
+            { id: 166, image: "/Rare Ultra/Professor_Oak's_Setup.png" },
+            { id: 167, image: "/Rare Ultra/Vileplume-GX.png" },
+            { id: 168, image: "/Rare Ultra/Volcarona-GX.png" },
+            { id: 169, image: "/Rare Ultra/Alolan_Persian-GX.png" },
+            { id: 170, image: "/Rare Ultra/Charizard_&_Braixen-GX.png" },
+            { id: 171, image: "/Rare Ultra/Mallow_&_Lana.png" },
+            { id: 172, image: "/Rare Ultra/Solgaleo_&_Lunala-GX.png" },
+            { id: 173, image: "/Rare Ultra/Cynthia_&_Caitlin.png" },
+        ]
+
+
+        // Define probabilities (you can adjust these based on desired rarity)
+        const EX_PROBABILITY = 0.10; // 10% chance for EX card
+        const FULL_ART_PROBABILITY = 0.01; // 1% chance for Full Art card
+
+        let packCards = [];
+        let currentIndex = 0;
+        let isAnimating = false;
+
+        function generateNewPack() {
+            // Reset the cards container to prepare for a new pack
+            const cardsContainer = document.getElementById("cardsContainer");
+            cardsContainer.style.visibility = "hidden"; // Hide cards while resetting
+            cardsContainer.innerHTML = ""; // Clear current cards
+
+            const pack = document.getElementById("pack");
+            if (pack) {
+                // Reset the pack animation if it's visible
+                pack.style.transform = "translateY(0)";
+                pack.style.opacity = "1";
+            }
+
+            // Open a new pack
+            openPack();
+        }
+
+        function cutPack(event) {
+            const pack = document.getElementById("pack");
+            if (!pack) return;
+
+            pack.style.transform = "translateY(-150%)";
+            pack.style.opacity = "0";
+
+            // Add a slight delay before removing the pack to ensure the animation finishes
+            setTimeout(() => {
+                pack.remove();
+                document.getElementById("cardsContainer").style.visibility = "visible";
+                openPack();
+            }, 600); // Slight delay (adjust if necessary)
+        }
+
+        // Function to open the pack and display the cards with sequential animation
+        function openPack() {
+            const cardsContainer = document.getElementById("cardsContainer");
+            cardsContainer.innerHTML = "";
+            packCards = [];
+            currentIndex = 0;
+
+            function getRandomCard(pool, alreadyPicked) {
+                let randomIndex;
+                let selectedCard;
+                do {
+                    randomIndex = Math.floor(Math.random() * pool.length);
+                    selectedCard = pool[randomIndex];
+                } while (alreadyPicked.includes(selectedCard.id)); // Ensure no duplicates by checking the ID
+
+                alreadyPicked.push(selectedCard.id); // Add the card ID to the alreadyPicked list
+                pool.splice(randomIndex, 1); // Remove the selected card from the pool
+                return selectedCard;
+            }
+
+            // Track already selected card IDs to avoid duplicates in the same pack
+            let alreadyPicked = [];
+
+            // Select 4 common cards
+            for (let i = 0; i < 4; i++) {
+                packCards.push(getRandomCard([...commonCards], alreadyPicked));
+            }
+
+            // Select 3 uncommon cards
+            for (let i = 0; i < 3; i++) {
+                packCards.push(getRandomCard([...uncommonCards], alreadyPicked));
+            }
+
+            // Select 1 trainer card
+            packCards.push(getRandomCard([...trainerCards], alreadyPicked));
+
+            // Select 1 energy card
+            packCards.push(getRandomCard([...energyCards], alreadyPicked));
+
+            // Determine if the last card should be a rare, EX, or Full Art
+            let rareOrEXCard;
+
+            const randomChance = Math.random();
+            if (randomChance < FULL_ART_PROBABILITY) {
+                // Select Full Art card
+                rareOrEXCard = getRandomCard([...fullArts], alreadyPicked);
+            } else if (randomChance < FULL_ART_PROBABILITY + EX_PROBABILITY) {
+                // Select EX card
+                rareOrEXCard = getRandomCard([...GX], alreadyPicked);
+            } else {
+                // Select normal rare card
+                rareOrEXCard = getRandomCard([...rareCards], alreadyPicked);
+            }
+
+            // Add the selected rare/EX/Full Art card to the pack
+            packCards.push(rareOrEXCard);
+
+            // Create the card elements and append them to the container
+            for (let i = packCards.length - 1; i >= 0; i--) {
+                let cardElement = document.createElement("div");
+                cardElement.classList.add("card");
+                cardElement.style.zIndex = packCards.length - i;
+
+                let cardImage = document.createElement("img");
+                cardImage.src = `images/${packCards[i].image}`;
+                cardElement.appendChild(cardImage);
+
+                cardElement.onclick = (event) => {
+                    revealNextCard(event, i === packCards.length - 1);
+                    addToBinder(packCards[i].image, packCards[i].id); // Add card with ID to binder
+                };
+
+                cardsContainer.appendChild(cardElement);
+            }
+        }
+
+        // Function to reveal the next card and prevent duplicates in the binder
+        function revealNextCard(event, isRare) {
+            let card = event.currentTarget;
+
+            // Check if card is already being processed
+            if (card.style.opacity === "0" || card.classList.contains('revealed')) {
+                return;
+            }
+
+            // Mark card as revealed to prevent multiple clicks
+            card.classList.add('revealed');
+            card.style.transform = "translateY(-250px)";
+            card.style.opacity = "0";
+
+            setTimeout(() => {
+                card.remove();
+                if (currentIndex === packCards.length - 1) {
+                    // If it's the last card (rare card), execute specific actions
+                    console.log('Last card revealed: Rare');
+                }
+                currentIndex++;
+                // Check if there are remaining cards to be revealed
+                if (currentIndex < packCards.length) {
+                    revealNextCardForNextCard();
+                }
+            }, 1000);
+        }
+
+        // Function to add card to binder and prevent duplicates
+        function addToBinder(image, id) {
+            let binder = JSON.parse(localStorage.getItem('binderCardsCosmicEclipse')) || [];
+
+            // Prevent adding duplicate cards based on both ID and Image path
+            if (!binder.some(item => item.id === id)) {
+                binder.push({ id, image });
+                localStorage.setItem('binderCardsCosmicEclipse', JSON.stringify(binder));
+            }
+        }
+
+
+        // Array of possible background images
+        const packImages = [
+            "images/Packs/leafeonPack.png",
+        ];
+
+        // Select a random background image
+        const randomBackground = packImages[Math.floor(Math.random() * packImages.length)];
+
+        // Set the background image of the pack
+        document.getElementById("pack").style.backgroundImage = `url(${randomBackground})`;
+
+
+
+
+    </script>
+</body>
+
+</html>
